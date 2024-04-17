@@ -5,13 +5,37 @@ const express = require('express')
 const app = express()
 
 //middleware
+app.use(express.json())
+
 app.use((req, res, next) => {
     console.log(req.path, req.method)
     next()
 })
 
-app.get('/', (req, res) =>{
-    res.json({mssg: 'Welcome to the app'})
+//routes
+//GET all workouts
+app.get('/workouts', (req, res) =>{
+    res.json({mssg: 'GET all workouts'})
+})
+
+//GET single workout
+app.get('/workouts/:id', (req, res) =>{
+    res.json({mssg: 'GET single workout'})
+})
+
+//POST new workout
+app.post('/workouts/new', (req, res) => {
+    res.json({mssg: "POST new workout"})
+})
+
+//DELETE workout
+app.delete('workouts/delete/:id', (req, res) => {
+    res.json({mssg: "DELETE a workout"})
+})
+
+//UPDATE a workout
+app.patch('workouts/update/:id', (req, res) => {
+    res.json({mssg: "UPDATE a workout"})
 })
 
 //listen for requests
