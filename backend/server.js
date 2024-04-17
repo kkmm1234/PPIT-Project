@@ -1,5 +1,6 @@
 require('dotenv').config()
 
+const mongoose = require('mongoose')
 const express = require('express')
 //express app
 const app = express()
@@ -29,17 +30,26 @@ app.post('/workouts/new', (req, res) => {
 })
 
 //DELETE workout
-app.delete('workouts/delete/:id', (req, res) => {
+app.delete('/workouts/delete/:id', (req, res) => {
     res.json({mssg: "DELETE a workout"})
 })
 
 //UPDATE a workout
-app.patch('workouts/update/:id', (req, res) => {
+app.patch('/workouts/update/:id', (req, res) => {
     res.json({mssg: "UPDATE a workout"})
 })
 
-//listen for requests
+//connect to db
+mongoose.connect(process.env.MONGO)
+.then(()=>{
+    //listen for requests
 app.listen(process.env.PORT, () => {
     console.log('listening on port 4000')
 })
+})
+.catch((error) => {
+    console.log(error)
+})
+
+
 
