@@ -46,16 +46,6 @@ const workoutSchema = new Schema({
 const workoutModel = mongoose.model('workout', workoutSchema);
 
 //routes
-//GET all workouts
-app.get('/workouts', (req, res) =>{
-    res.json({mssg: 'GET all workouts'})
-})
-
-//GET single workout
-app.get('/workouts/:id', (req, res) =>{
-    res.json({mssg: 'GET single workout'})
-})
-
 //POST new workout
 app.post('/workouts/new', async (req, res) => {
     const {title, weight, reps, sets, setTime, restTime} = req.body
@@ -68,14 +58,30 @@ app.post('/workouts/new', async (req, res) => {
     }
 })
 
+//GET all workouts
+app.get('/workouts', async (req, res) =>{
+    const workout = await workoutModel.find({}).sort({createdAt: -1})
+    res.status(200).json(workout)
+})
+
+//GET single workout
+app.get('/workouts/:id', async (req, res) =>{
+    const{id} = req.params
+    const workout = await workoutModel.find({id})
+    if(!workout){
+        return res.status(400).json({error: 'No Workout found'})
+    }
+    res.status(200).json(workout)
+})
+
 //DELETE workout
 app.delete('/workouts/delete/:id', (req, res) => {
-    res.json({mssg: "DELETE a workout"})
+    res.json({mssg: 'DELETE a workout'})
 })
 
 //UPDATE a workout
 app.patch('/workouts/update/:id', (req, res) => {
-    res.json({mssg: "UPDATE a workout"})
+    res.json({mssg: 'UPDATE a workout'})
 })
 
 //connect to db
