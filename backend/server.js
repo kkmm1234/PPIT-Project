@@ -67,21 +67,39 @@ app.get('/workouts', async (req, res) =>{
 //GET single workout
 app.get('/workouts/:id', async (req, res) =>{
     const{id} = req.params
-    const workout = await workoutModel.find({id})
-    if(!workout){
-        return res.status(400).json({error: 'No Workout found'})
+     //Check if a vaild id is used
+     if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ error: 'No Workout found' });
     }
+    const workout = await workoutModel.findById(id)
+
     res.status(200).json(workout)
 })
 
 //DELETE workout
-app.delete('/workouts/delete/:id', (req, res) => {
-    res.json({mssg: 'DELETE a workout'})
+app.delete('/workouts/delete/:id', async (req, res) => {
+    const { id } = req.params;
+    //Check if a vaild id is used
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ error: 'No workout found' });
+    }
+
+    const workout = await workoutModel.findOneAndDelete({ _id: id });
+
+    res.status(200).json(workout);
 })
 
 //UPDATE a workout
-app.patch('/workouts/update/:id', (req, res) => {
-    res.json({mssg: 'UPDATE a workout'})
+app.patch('/workouts/update/:id', async (req, res) => {
+    const { id } = req.params;
+    //Check if a vaild id is used
+if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'No Workout found' });
+}
+
+const workout = await workoutModel.findOneAndUpdate({ _id: id }, { ...req.body });
+
+res.status(200).json(workout);
 })
 
 //connect to db
