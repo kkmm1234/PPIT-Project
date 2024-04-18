@@ -13,6 +13,38 @@ app.use((req, res, next) => {
     next()
 })
 
+//mongoose schema
+const Schema = mongoose.Schema
+
+const workoutSchema = new Schema({
+    title:{
+        type: String,
+        required: true
+    },
+    weight: {
+        type: Number,
+        required: true
+    },
+    reps: {
+        type: Number,
+        required: true
+    },
+    sets:{
+        type: Number,
+        required: true
+    },
+    setTime: {
+        type: Number,
+        required: true
+    },
+    restTime: {
+        type: Number,
+        required: true
+    }
+})
+//model
+const workoutModel = mongoose.model('workout', workoutSchema);
+
 //routes
 //GET all workouts
 app.get('/workouts', (req, res) =>{
@@ -25,8 +57,15 @@ app.get('/workouts/:id', (req, res) =>{
 })
 
 //POST new workout
-app.post('/workouts/new', (req, res) => {
-    res.json({mssg: "POST new workout"})
+app.post('/workouts/new', async (req, res) => {
+    const {title, weight, reps, sets, setTime, restTime} = req.body
+    try{
+        const workout = await workoutModel.create({title, weight, reps, sets, setTime, restTime})
+        res.status(200).json(workout)
+    }
+    catch(error){
+        res.status(400).json({error: error.message})
+    }
 })
 
 //DELETE workout
