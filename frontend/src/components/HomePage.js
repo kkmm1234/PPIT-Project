@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 
 //comonentes
 import WorkoutIteam from '../components/workoutIteam'
+import CreateWorkout from "./createWorkout"
 
 const HomePage =() => {
     const[workouts, getWorkouts] = useState(null)
@@ -24,6 +25,7 @@ const HomePage =() => {
                    <WorkoutIteam key ={workout._id} workout={workout}/>
                 ))}
             </div>
+            <CreateWorkout/>
         </div>
     )
 }
