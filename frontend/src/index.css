@@ -32,3 +32,22 @@ header a {
   margin: 0 auto;
 }
 
+.home {
+  display: flex;
+  justify-content: space-between; /* This pushes the divs to the left and right */
+  align-items: flex-start; /* Aligns the divs to the top of the container */
+  margin-top: 20px;
+  padding: 0 20px; /* Optional: Adds padding to the left and right sides */
+}
+
+.workout-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
+  gap: 20px; /* Adds space between the grid items */
+  flex: 1;
+}
+
+.workout-create {
+  flex: 0; /* The div will take up only as much space as its content requires */
+}
+

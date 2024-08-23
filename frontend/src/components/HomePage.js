@@ -19,13 +19,15 @@ const HomePage =() => {
     }, [])
 
     return(
-        <div className="HomePage">
-            <div className="DisplayWorkouts">
+        <div className="home">
+            <div className="workout-details">
                 {workouts && workouts.map((workout) => (
                    <WorkoutIteam key ={workout._id} workout={workout}/>
                 ))}
             </div>
-            <CreateWorkout/>
+            <div className="workout-create">
+                <CreateWorkout/>
+            </div>
         </div>
     )
 }

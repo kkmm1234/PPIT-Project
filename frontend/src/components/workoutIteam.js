@@ -15,7 +15,7 @@ function WorkoutItem({ workout }) {
                     <h4>SET TIME(Mins):{workout.setTime}</h4>
                     <h4>REST TIME(Mins):{workout.restTime}</h4>
                 </Card.Body>
-                <Button variant='danger' onClick={(e) => {
+                <Button variant='danger' className='btn' onClick={(e) => {
                     e.preventDefault();
                     // Send a delete request to the API to delete the workout item
                     axios.delete('/workouts/delete/' + workout._id)

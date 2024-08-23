@@ -42,68 +42,58 @@ function CreateWorkout() {
     };
 
     return (
-        <div>
-            <h2>Create a Workout!</h2>
-            <form onSubmit={handleSubmit}>            
-                <div className="group">
-                    <label>Add Title: </label>
-                    <input
-                        type="text"
-                        className="control"
-                        value={title}
-                        onChange={(e) => { setTitle(e.target.value) }}
-                    />
-                </div>
-                <div className="group">
-                    <label>Weight: </label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={weight}
-                        onChange={(e) => { setWeight(e.target.value) }}
-                    />
-                </div>
-                <div className="group">
-                    <label>Reps: </label>
-                    <input
-                        type="text"
-                        className="control"
-                        value={reps}
-                        onChange={(e) => { setReps(e.target.value) }}
-                    />
-                </div>
-                <div className="group">
-                    <label>Sets: </label>
-                    <input
-                        type="text"
-                        className="control"
-                        value={sets}
-                        onChange={(e) => { setSets(e.target.value) }}
-                    />
-                </div>
-                <div className="group">
-                    <label>Amount of time per Set: </label>
-                    <input
-                        type="text"
-                        className="control"
-                        value={setTime}
-                        onChange={(e) => { setSetTime(e.target.value) }}
-                    />
-                </div>
-                <div className="group">
-                    <label>Amount of time per Rest: </label>
-                    <input
-                        type="text"
-                        className="control"
-                        value={restTime}
-                        onChange={(e) => { setRestTime(e.target.value) }}
-                    />
-                </div>
-                <div>
-                    <input type="submit" value="Add Workout" />
-                </div>
+            <form className="create" onSubmit={handleSubmit}>  
+                <h2>Create a Workout!</h2>          
+                <label>Add Title: </label>
+                <input
+                    type="text"
+                    className="control"
+                    value={title}
+                    onChange={(e) => { setTitle(e.target.value) }}
+                />
+
+                <label>Weight: </label>
+                <input
+                    type="text"
+                    className="form-control"
+                    value={weight}
+                    onChange={(e) => { setWeight(e.target.value) }}
+                />
+
+                <label>Reps: </label>
+                <input
+                    type="text"
+                    className="control"
+                        alue={reps}
+                    onChange={(e) => { setReps(e.target.value) }}
+                />
+
+                <label>Sets: </label>
+                <input
+                    type="text"
+                    className="control"
+                    value={sets}
+                    onChange={(e) => { setSets(e.target.value) }}
+                />
+
+                <label>Amount of time per Set: </label>
+                <input
+                    type="text"
+                    className="control"
+                    value={setTime}
+                    onChange={(e) => { setSetTime(e.target.value) }}
+                />
+
+                <label>Amount of time per Rest: </label>
+                <input
+                    type="text"
+                    className="control"
+                    value={restTime}
+                    onChange={(e) => { setRestTime(e.target.value) }}
+                />
+
+                <button type="submit" className="btn">Create Workout</button>
             </form>
-        </div>
     );
 }
 
