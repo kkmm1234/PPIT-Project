@@ -12,11 +12,11 @@ function CreateWorkout() {
 
     const navigate = useNavigate();
 
-    // Function to handle form submission
+    //function to handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Create a workout object with the form input values
+        //create a workout object with the form input values
         const workout = {
             title: title,
             weight: weight,
@@ -26,17 +26,17 @@ function CreateWorkout() {
             restTime: restTime,
         };
 
-        // Send a POST request to the server with the data
+        //send a POST request to the server with the data
         axios.post('/workouts/new', workout)
             .then(response => {
-                // Check if the response status is successful and clear form inputs
+                //check if the response status is successful
                 if (response.status === 200) {
                     // Navigate to the 'HomePage' after successful submission
                     navigate('/');
                 }
             })
             .catch(error => {
-                // Handle errors if needed
+                //handle errors if needed
                 console.error('Error submitting data:', error);
             });
     };

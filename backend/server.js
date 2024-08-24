@@ -105,7 +105,7 @@ res.status(200).json(workout);
 //connect to db
 mongoose.connect(process.env.MONGO)
 .then(()=>{
-    //listen for requests
+//listen for requests
 app.listen(process.env.PORT, () => {
     console.log('listening on port 4000')
 })
