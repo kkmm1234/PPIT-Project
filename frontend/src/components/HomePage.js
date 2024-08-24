@@ -1,18 +1,22 @@
-import { useEffect, useState } from "react"
+import { useEffect} from "react"
+import { useWorkout } from "../context/workoutContextHook"
 
 //comonentes
 import WorkoutIteam from '../components/workoutIteam'
 import CreateWorkout from "./createWorkout"
 
 const HomePage =() => {
-    const[workouts, getWorkouts] = useState(null)
+    const {workouts, dispatch} = useWorkout()
+    
     useEffect(() => {
         const Workouts = async () => {
+            //fetch workouts from the server
             const res = await fetch('/workouts')
             const json = await res.json()
 
             if(res.ok){
-                getWorkouts(json)
+                //dispatch from context sets json to glabal state
+                dispatch({type: 'SET_WORKOUTS', payload: json})
             }
         }
         Workouts()
