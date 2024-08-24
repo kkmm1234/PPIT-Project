@@ -1,8 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useWorkout } from "../context/workoutContextHook";
 
 function CreateWorkout() {
+    const { dispatch } = useWorkout();
     const [title, setTitle] = useState('');
     const [weight, setWeight] = useState('');
     const [reps, setReps] = useState('');
@@ -10,10 +11,9 @@ function CreateWorkout() {
     const [setTime, setSetTime] = useState('');
     const [restTime, setRestTime] = useState('');
 
-    const navigate = useNavigate();
 
     //function to handle form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         //create a workout object with the form input values
@@ -26,19 +26,28 @@ function CreateWorkout() {
             restTime: restTime,
         };
 
-        //send a POST request to the server with the data
-        axios.post('/workouts/new', workout)
-            .then(response => {
-                //check if the response status is successful
-                if (response.status === 200) {
-                    // Navigate to the 'HomePage' after successful submission
-                    navigate('/');
+        try
+        {
+            //send a POST request to the server with the data
+            const response = await axios.post('/workouts/new', workout)
+
+            if (response.status ===200)
+                {
+                    //dispatch the new workout to the global state
+                    dispatch({type: 'CREATE_WORKOUT', payload: response.data})
+                    setTitle('')
+                    setWeight('')
+                    setReps('')
+                    setSets('')
+                    setSetTime('')
+                    setRestTime('')
                 }
-            })
-            .catch(error => {
-                //handle errors if needed
-                console.error('Error submitting data:', error);
-            });
+        }
+        catch(error)
+        {
+            //handle error if needed
+            console.log(error)
+        }
     };
 
     return (
