@@ -2,6 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { useWorkout } from '../context/workoutContextHook';
 
 function WorkoutItem({ workout }) {
@@ -36,6 +37,7 @@ function WorkoutItem({ workout }) {
                 </Card.Body>
                 <Button variant='danger' className='btn' onClick={deleteWorkout}>
                 Delete</Button>
+                <button className='btn'><Link to={'/update/'+workout._id}>Update</Link></button>
             </Card>
         </div>
     )
