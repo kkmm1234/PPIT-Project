@@ -20,7 +20,7 @@ const HomePage =() => {
             }
         }
         Workouts()
-    }, [])
+    }, [dispatch])
 
     return(
         <div className="home">
