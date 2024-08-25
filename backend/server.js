@@ -61,7 +61,7 @@ const userSchema = new Schema({
 //function to create a token (function so can be reused)
 const createToken = (id) => { 
     //create a token with the user id and the secret key and set the expiration to 1 day
-    jwt.sign({id}, process.env.SECRET, {expiresIn: '1d'})
+    return jwt.sign({id}, process.env.SECRET, {expiresIn: '1d'})
 }
 
 //static signup method checks if username already exists and password hashing using bcrypt
@@ -167,7 +167,11 @@ app.post('/register', async  (req, res) => {
 
     try{
         const user = await userModel.signup(username, password)
-        res.status(200).json({username, user})
+
+        //create a token using fucntion
+        const token = createToken(user._id)
+
+        res.status(200).json({username, token})
     }
     catch(error){
         res.status(400).json({error: error.message})
