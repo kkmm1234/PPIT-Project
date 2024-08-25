@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const login = () => {
+const Login = () => {
     const [user, setUser] = useState('');
     const [password , setPassword] = useState('');
 
@@ -13,16 +13,16 @@ const login = () => {
 
     return (
         <form className = 'login' onSubmit = {handleSubmit} >
-            <h3>Register</h3>
+            <h3>Login</h3>
 
             <label>Username:</label>
-            <input type = 'text' placeholder = 'Enter Username' value = {user} onChange = {(e) => setUser(e.target.value)}></input>
+            <input type = 'Username' placeholder = 'Enter Username' value = {user} onChange = {(e) => setUser(e.target.value)}></input>
 
             <label>Password:</label>
-            <input type = 'text' placeholder = 'Enter Password' value = {user} onChange = {(e) => setPassword(e.target.value)}></input>
+            <input type = 'Password' placeholder = 'Enter Password' value = {password} onChange = {(e) => setPassword(e.target.value)}></input>
             <button type = 'submit'>Login</button>
         </form>
     )
 }
 
-export default register;
+export default Login;
