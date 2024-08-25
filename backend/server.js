@@ -1,6 +1,8 @@
 require('dotenv').config()
 
+
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
 const express = require('express')
 //express app
 const app = express()
@@ -54,8 +56,37 @@ const userSchema = new Schema({
         required: true,
     }
 })
+
+//static signup method checks if username already exists and password hashing using bcrypt
+userSchema.statics.signup = async function (username, password) {
+    const exists = await this.findOne({ username });
+
+    if (exists) {
+        throw Error('Username already exists');
+    }
+
+     //ensure the password is provided
+     if (!password) {
+        throw new Error('Password is required');
+    }
+
+    try {
+        //generate a salt
+        const passSalt = await bcrypt.genSalt(10);
+
+        //hash the password with the generated salt
+        const hashedPass = await bcrypt.hash(password, passSalt);
+
+        //create and return the new user
+        const user = await this.create({ username, password: hashedPass });
+        return user;
+    } catch (error) {
+        throw new Error('Failed to hash the password');
+    }
+}
 //model
 const workoutModel = mongoose.model('workout', workoutSchema);
+const userModel = mongoose.model('User', userSchema);
 
 //routes
 //POST new workout
@@ -121,7 +152,15 @@ app.post('/login', async (req, res) => {
 
 //register route
 app.post('/register', async  (req, res) => {
-    res.json({mssg: 'register route'})  
+    const {username, password} = req.body
+
+    try{
+        const user = await userModel.signup(username, password)
+        res.status(200).json({username, user})
+    }
+    catch(error){
+        res.status(400).json({error: error.message})
+    }  
 })
 
 //connect to db
