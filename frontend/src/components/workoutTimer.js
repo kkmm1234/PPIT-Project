@@ -2,32 +2,32 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const WorkoutTimer = () => {
-    const [workouts, setWorkouts] = useState([]);  // Store all workouts
-    const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);  // Track the current exercise
-    const [currentSet, setCurrentSet] = useState(1);  // Track the current set within an exercise
-    const [timeLeft, setTimeLeft] = useState(0);  // Countdown timer
-    const [isResting, setIsResting] = useState(false);  // Track whether in rest period
-    const [workoutComplete, setWorkoutComplete] = useState(false);  // Track if the workout is complete
-    const [exerciseComplete, setExerciseComplete] = useState(false);  // Track if the current exercise is complete
+    const [workouts, setWorkouts] = useState([]);  //store all workouts
+    const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);  //track the current exercise
+    const [currentSet, setCurrentSet] = useState(1);  //track the current set
+    const [timeLeft, setTimeLeft] = useState(0);  //countdown timer
+    const [isResting, setIsResting] = useState(false);  //track if in rest period
+    const [workoutComplete, setWorkoutComplete] = useState(false);  //track if workout is complete
+    const [exerciseComplete, setExerciseComplete] = useState(false);  //track if current exercise is complete
 
     useEffect(() => {
         const fetchWorkouts = async () => {
             try {
-                // Fetch workouts from the server
+                //fetch workouts from the server
                 const res = await axios.get('/workouts');
 
-                // Check if the request was successful
+                //check if the request was successful
                 if (res.status === 200) {
                     const workoutData = res.data.map(workout => ({
                         title: workout.title,
                         weight: workout.weight,
                         reps: workout.reps,
                         sets: workout.sets,
-                        setTime: workout.setTime * 60,  // Convert setTime to seconds
-                        restTime: workout.restTime * 60,  // Convert restTime to seconds
+                        setTime: workout.setTime * 60,  //convert setTime to seconds
+                        restTime: workout.restTime * 60,  //convert restTime to seconds
                     }));
-                    setWorkouts(workoutData);  // Set workouts state
-                    setTimeLeft(workoutData[0].setTime);  // Initialize the timer with the first exercise's set time
+                    setWorkouts(workoutData);  //set workouts state
+                    setTimeLeft(workoutData[0].setTime);  //initialize the timer with the first exercise's set time
                 }
             } catch (error) {
                 console.error('Failed to fetch workouts:', error);
@@ -48,19 +48,19 @@ const WorkoutTimer = () => {
             clearInterval(timer);
 
             if (!isResting) {
-                // Switch to rest time
+                //switch to rest time
                 setIsResting(true);
                 setTimeLeft(workouts[currentExerciseIndex].restTime);
             } else {
-                // Finished resting
+                //finished resting
                 setIsResting(false);
 
                 if (currentSet < workouts[currentExerciseIndex].sets) {
-                    // Move to the next set
+                    //move to the next set
                     setCurrentSet(prevSet => prevSet + 1);
                     setTimeLeft(workouts[currentExerciseIndex].setTime);
                 } else {
-                    // Mark exercise as complete, wait for user to start the next one
+                    //mark exercise as complete, wait for user to start the next one
                     setExerciseComplete(true);
                 }
             }
@@ -72,7 +72,7 @@ const WorkoutTimer = () => {
     const handleNextExercise = () => {
         if (currentExerciseIndex < workouts.length - 1) {
             setCurrentExerciseIndex(prevIndex => prevIndex + 1);
-            setCurrentSet(1);  // Reset set count for new exercise
+            setCurrentSet(1);  //reset set count for new exercise
             setTimeLeft(workouts[currentExerciseIndex + 1].setTime);
             setExerciseComplete(false);
         } else {

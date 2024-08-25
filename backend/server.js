@@ -13,9 +13,9 @@ app.use((req, res, next) => {
     next()
 })
 
-//mongoose schema
+//mongoose schemas
 const Schema = mongoose.Schema
-
+//workout schema
 const workoutSchema = new Schema({
     title:{
         type: String,
@@ -40,6 +40,18 @@ const workoutSchema = new Schema({
     restTime: {
         type: Number,
         required: true
+    }
+})
+//user schema
+const userSchema = new Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true,
     }
 })
 //model
@@ -100,6 +112,16 @@ if (!mongoose.Types.ObjectId.isValid(id)) {
 const workout = await workoutModel.findOneAndUpdate({ _id: id }, { ...req.body });
 
 res.status(200).json(workout);
+})
+
+//login route
+app.post('/login', async (req, res) => {
+    res.json({mssg: 'login route'})
+})
+
+//register route
+app.post('/register', async  (req, res) => {
+    res.json({mssg: 'register route'})  
 })
 
 //connect to db
