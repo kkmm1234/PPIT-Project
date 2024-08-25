@@ -95,6 +95,33 @@ userSchema.statics.signup = async function (username, password) {
         throw new Error('Failed to hash the password');
     }
 }
+
+//static login method checks if the user exists and the password is correct
+userSchema.statics.login = async function (username, password) {
+
+    //ensure the password is provided
+    if (!password|| !username) {
+        throw new Error('All fields are required');
+    }
+    //find the user by username
+    const user = await this.findOne({ username });
+
+    //if the user does not exist
+    if (!user) {
+        throw new Error('Incorrect username or password');
+    }
+
+    //compare the hashed password with the provided password
+    const Match = await bcrypt.compare(password, user.password);
+
+    //if the password is incorrect
+    if (!Match) {
+        throw new Error('Incorrect username or password');
+    }
+
+    return user;
+}
+
 //model
 const workoutModel = mongoose.model('workout', workoutSchema);
 const userModel = mongoose.model('User', userSchema);
@@ -158,7 +185,19 @@ res.status(200).json(workout);
 
 //login route
 app.post('/login', async (req, res) => {
-    res.json({mssg: 'login route'})
+    const {username, password} = req.body
+
+    try{
+        const user = await userModel.login(username, password)
+
+        //create a token using fucntion
+        const token = createToken(user._id)
+
+        res.status(200).json({username, token})
+    }
+    catch(error){
+        res.status(400).json({error: error.message})
+    }
 })
 
 //register route
@@ -189,6 +228,3 @@ app.listen(process.env.PORT, () => {
 .catch((error) => {
     console.log(error)
 })
-
-
-
