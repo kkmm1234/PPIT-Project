@@ -60,14 +60,18 @@ const userSchema = new Schema({
 //static signup method checks if username already exists and password hashing using bcrypt
 userSchema.statics.signup = async function (username, password) {
     const exists = await this.findOne({ username });
-
+    //ensure the username is unique
     if (exists) {
         throw Error('Username already exists');
     }
 
      //ensure the password is provided
-     if (!password) {
-        throw new Error('Password is required');
+     if (!password|| !username) {
+        throw new Error('All fields are required');
+    }
+    //min password length
+    if(password.length < 6){
+        throw new Error('Password must be at least 6 characters long');
     }
 
     try {
