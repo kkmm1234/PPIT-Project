@@ -7,6 +7,7 @@ const NavBar = () => {
                 <Link to="/">
                     <h1>Work it Out</h1>
                 </Link>
+                <Link to={'/workoutTimer'}>Start workout</Link>
             </div>
         </header>
     )

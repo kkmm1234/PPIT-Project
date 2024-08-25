@@ -4,6 +4,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import HomePage from './components/HomePage'
 import UpdateWorkout from './components/updateWorkout';
 import NavBar from './components/NavBar'
+import WorkoutTimer from './components/workoutTimer'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path='/update/:id' element={<UpdateWorkout></UpdateWorkout>}></Route>
+            <Route path='/workoutTimer' element={<WorkoutTimer></WorkoutTimer>}></Route>
           </Routes>
         </div>
       </BrowserRouter>
