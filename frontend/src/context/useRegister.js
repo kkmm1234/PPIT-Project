@@ -24,6 +24,7 @@ export const useRegister = () => {
             const json = response.data;
 
             //successful response handling
+            //save the user data in local storage
             localStorage.setItem('user', JSON.stringify(json));
 
             //update the user context
