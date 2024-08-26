@@ -1,11 +1,16 @@
 import {Link} from 'react-router-dom'
 import { UserLogout } from '../context/userLogout'
+import { useUserContext } from '../context/userContextHook'
+
 
 const NavBar = () => {
     const {logout} = UserLogout()
 
+    const {user} = useUserContext()
+
     const handleClick = () => {
         logout()
+    
     }
     return(
         <header>
@@ -15,13 +20,19 @@ const NavBar = () => {
                 </Link>
                 <Link to={'/workoutTimer'}>Start workout</Link>
                 <nav>
-                    <div>
-                        <button onClick={handleClick}>Logout</button>
-                    </div>
-                    <div>
-                        <Link to="/login">Login</Link>
-                        <Link to="/register">Register</Link>
-                    </div>
+                    {/* only if user is logged in show welcome message and logout button */}
+                    {user && (
+                            <div>
+                                <p>Welcome {user.username}</p>
+                                <button onClick={handleClick}>Logout</button>
+                            </div>
+                        )}
+                    {!user && (
+                        <div>
+                            <Link to="/login">Login</Link>
+                            <Link to="/register">Register</Link>
+                        </div>
+                    )}
                 </nav>
             </div>
         </header>
