@@ -1,13 +1,15 @@
 import { useState } from 'react';
+import { useRegister } from '../context/useRegister';
 
 const Register = () => {
     const [user, setUser] = useState('');
     const [password , setPassword] = useState('');
+    const {register, error, isLoading} = useRegister();
 
     const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(user, password);
+    await register(user, password);
     
     }
 
@@ -20,7 +22,8 @@ const Register = () => {
 
             <label>Password:</label>
             <input type = 'Password' placeholder = 'Enter Password' value = {password} onChange = {(e) => setPassword(e.target.value)}></input>
-            <button type = 'submit'>Register</button>
+            <button type = 'submit' disabled = {isLoading}>Register</button>
+            {error && <p>{error}</p>}
         </form>
     )
 }

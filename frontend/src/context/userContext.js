@@ -14,7 +14,7 @@ export const userReducer = (state, action) => {
 }
 
 export const UserProvider = ({children}) => {
-  const [state, dispatch] = useReducer((useReducer) => {
+  const [state, dispatch] = useReducer(userReducer, {
     user: null
     });
 
