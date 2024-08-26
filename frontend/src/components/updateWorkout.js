@@ -57,7 +57,12 @@ export default function UpdateWorkout() {
         };
 
         //send a patch request to update
-        axios.patch('/workouts/update/' + id, workout)
+        axios.patch('/workouts/update/' + id, workout, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            }
+        )   
             .then((res) => {
                 //navigate to the homepage
                 navigate('/');

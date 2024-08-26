@@ -67,8 +67,10 @@ app.use(authCheck)
 //POST new workout
 app.post('/workouts/new', async (req, res) => {
     const {title, weight, reps, sets, setTime, restTime} = req.body
+    
     try{
-        const workout = await Workout.create({title, weight, reps, sets, setTime, restTime})
+        const user_id = req.user._id
+        const workout = await Workout.create({title, weight, reps, sets, setTime, restTime, user_id})
         res.status(200).json(workout)
     }
     catch(error){

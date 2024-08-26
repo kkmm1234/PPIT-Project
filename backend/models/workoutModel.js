@@ -26,6 +26,10 @@ const workoutSchema = new Schema({
     restTime: {
         type: Number,
         required: true
+    }, 
+    user_id: {
+        type: String,
+        required: true
     }
 })
 

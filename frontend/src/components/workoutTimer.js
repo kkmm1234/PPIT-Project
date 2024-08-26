@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useUserContext } from "../context/userContextHook";
 
 const WorkoutTimer = () => {
     const [workouts, setWorkouts] = useState([]);  //store all workouts
@@ -9,12 +10,17 @@ const WorkoutTimer = () => {
     const [isResting, setIsResting] = useState(false);  //track if in rest period
     const [workoutComplete, setWorkoutComplete] = useState(false);  //track if workout is complete
     const [exerciseComplete, setExerciseComplete] = useState(false);  //track if current exercise is complete
+    const { user } = useUserContext();
 
     useEffect(() => {
         const fetchWorkouts = async () => {
             try {
                 //fetch workouts from the server
-                const res = await axios.get('/workouts');
+                const res = await axios.get('/workouts', {
+                    headers: {
+                        Authorization: `Bearer ${user.token}`
+                    }
+                });
 
                 //check if the request was successful
                 if (res.status === 200) {
@@ -35,7 +41,7 @@ const WorkoutTimer = () => {
         };
 
         fetchWorkouts();
-    }, []);
+    }, [user]);
 
     useEffect(() => {
         if (workoutComplete || workouts.length === 0 || exerciseComplete) return;

@@ -12,13 +12,16 @@ function CreateWorkout() {
     const [setTime, setSetTime] = useState('');
     const [restTime, setRestTime] = useState('');
     const { user } = useUserContext();
+    const [error, setError] = useState('');
+
 
 
     //function to handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!user) { 
+        if (!user) {
+            console.log('User not logged in');
             return;
         }
 
@@ -34,13 +37,15 @@ function CreateWorkout() {
 
         try
         {
+            console.log('Creating workout:', workout);
             //send a POST request to the server with the data
-            const response = await axios.post('/workouts/new', workout, {
+            const response = await axios.post('/workouts/new',{
                 headers: {
                     Authorization: `Bearer ${user.token}`
-                }
+                } ,workout
             }
             )
+        
 
             if (response.status ===200)
                 {
@@ -58,6 +63,7 @@ function CreateWorkout() {
         {
             //handle error if needed
             console.log(error)
+            setError('Failed to create workout. Please try again.')
         }
     };
 
@@ -84,7 +90,7 @@ function CreateWorkout() {
                 <input
                     type="text"
                     className="control"
-                        alue={reps}
+                    value={reps}
                     onChange={(e) => { setReps(e.target.value) }}
                 />
 
@@ -113,6 +119,7 @@ function CreateWorkout() {
                 />
 
                 <button type="submit" className="btn">Create Workout</button>
+                {error && <p>{error}</p>}
             </form>
     );
 }
