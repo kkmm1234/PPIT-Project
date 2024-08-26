@@ -20,9 +20,9 @@ app.use((req, res, next) => {
 })
 
 //function to create a token (function so can be reused)
-const createToken = (id) => { 
+const createToken = (_id) => { 
     //create a token with the user id and the secret key and set the expiration to 1 day
-    return jwt.sign({id}, process.env.SECRET, {expiresIn: '1d'})
+    return jwt.sign({_id}, process.env.SECRET, {expiresIn: '1d'})
 }
 
 //login route
