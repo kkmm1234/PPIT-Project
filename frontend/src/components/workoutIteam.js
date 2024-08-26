@@ -10,8 +10,13 @@ function WorkoutItem({ workout }) {
     const { dispatch } = useWorkout();
     const { user } = useUserContext();
 
+
     const deleteWorkout = async (e) => {
         e.preventDefault();
+
+        if(!user){
+            return;
+        }
 
         try {
             //send a delete request

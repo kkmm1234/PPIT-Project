@@ -42,6 +42,10 @@ export default function UpdateWorkout() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if (!user) {
+            return;
+        }
+
         //create a travel object with updated form input values
         const workout = {
             title: title,

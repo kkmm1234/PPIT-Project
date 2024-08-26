@@ -18,6 +18,10 @@ function CreateWorkout() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!user) { 
+            return;
+        }
+
         //create a workout object with the form input values
         const workout = {
             title: title,
