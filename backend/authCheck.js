@@ -18,12 +18,12 @@ const authCheck = async (req, res, next) => {
         //grab id from token
         const {_id} = jwt.verify(token, process.env.SECRET)
         //find user by id
-        req.user = await User.findOne({_id}).select('_id')
+        req.user = await User.findById(_id ).select('_id')
         next()
     } 
     catch (error) {
         console.log(error)
-        return res.status(401).json({error: 'Bad request'})
+        return res.status(401).json({error: 'Bad request!!!'})
     }
 }
 

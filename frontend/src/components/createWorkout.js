@@ -39,12 +39,14 @@ function CreateWorkout() {
         {
             console.log('Creating workout:', workout);
             //send a POST request to the server with the data
-            const response = await axios.post('/workouts/new',{
-                headers: {
-                    Authorization: `Bearer ${user.token}`
-                } ,workout
-            }
-            )
+            const response = await axios.post('/workouts/new/', workout,
+                {
+                    headers: {
+                        Content_Type: 'application/json',
+                        Authorization: `Bearer ${user.token}`
+                    }
+                }
+            );
         
 
             if (response.status ===200)
