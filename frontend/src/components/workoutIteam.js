@@ -4,23 +4,30 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useWorkout } from '../context/workoutContextHook';
+import { useUserContext } from '../context/userContextHook';
 
 function WorkoutItem({ workout }) {
     const { dispatch } = useWorkout();
+    const { user } = useUserContext();
 
     const deleteWorkout = async (e) => {
         e.preventDefault();
 
         try {
-            // Send a delete request to the API to delete the workout item
-            const response = await axios.delete('/workouts/delete/' + workout._id);
+            //send a delete request
+            const response = await axios.delete('/workouts/delete/' + workout._id, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            }
+            );
 
             if (response.status === 200) {
-                // Dispatch the delete workout to the global state
+                //dispatch the delete workout to the global state
                 dispatch({ type: 'DELETE_WORKOUT', payload: workout._id });
             }
         } catch (error) {
-            // Handle error if needed
+            //handle error if needed
             console.error('Error deleting workout:', error);
         }
     }

@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useUserContext } from "../context/userContextHook";
 
 export default function UpdateWorkout() {
     let { id } = useParams(); // ID parameter from the URL
@@ -12,12 +13,18 @@ export default function UpdateWorkout() {
     const [sets, setSets] = useState('');
     const [setTime, setSetTime] = useState('');
     const [restTime, setRestTime] = useState('');
+    const { user } = useUserContext();
 
     const navigate = useNavigate();
 
     useEffect(() => {
         // Fetch the specific travel item based on the ID
-        axios.get('/workouts/' + id)
+        axios.get('/workouts/' + id , {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+            }
+        }
+        )
             .then((response) => {
                 //Set state with the retrieved data
                 setTitle(response.data.title);
@@ -30,12 +37,12 @@ export default function UpdateWorkout() {
             .catch((error) => {
                 console.log(error);
             });
-    }, [id]); //Dependency array to rerun the effect when the id parameter changes
+    }, [id, user]); //dependency array
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Create a travel object with updated form input values
+        //create a travel object with updated form input values
         const workout = {
             title: title,
             weight: weight,
@@ -45,10 +52,10 @@ export default function UpdateWorkout() {
             restTime: restTime,
         };
 
-        // Send a PUT request to update the specific travel item based on the ID
+        //send a patch request to update
         axios.patch('/workouts/update/' + id, workout)
             .then((res) => {
-                // Navigate to the 'read' page after successful edit
+                //navigate to the homepage
                 navigate('/');
             })
             .catch((error) => {

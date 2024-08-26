@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useWorkout } from "../context/workoutContextHook";
+import { useUserContext } from "../context/userContextHook";
 
 function CreateWorkout() {
     const { dispatch } = useWorkout();
@@ -10,6 +11,7 @@ function CreateWorkout() {
     const [sets, setSets] = useState('');
     const [setTime, setSetTime] = useState('');
     const [restTime, setRestTime] = useState('');
+    const { user } = useUserContext();
 
 
     //function to handle form submission
@@ -29,7 +31,12 @@ function CreateWorkout() {
         try
         {
             //send a POST request to the server with the data
-            const response = await axios.post('/workouts/new', workout)
+            const response = await axios.post('/workouts/new', workout, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            }
+            )
 
             if (response.status ===200)
                 {
