@@ -96,11 +96,11 @@ const WorkoutTimer = () => {
             ) : (
                 workouts.length > 0 ? (
                     <div>
-                        <h3>{workouts[currentExerciseIndex].title}</h3>
-                        <p>Weight: {workouts[currentExerciseIndex].weight}kg</p>
-                        <p>Reps: {workouts[currentExerciseIndex].reps}</p>
-                        <p>Set: {currentSet}/{workouts[currentExerciseIndex].sets}</p>
-                        <p>{isResting ? 'Rest Time' : 'Set Time'}: {timeLeft} seconds</p>
+                        <h2>{workouts[currentExerciseIndex].title}</h2>
+                        <h3>Weight: {workouts[currentExerciseIndex].weight}kg</h3>
+                        <h3>Reps: {workouts[currentExerciseIndex].reps}</h3>
+                        <h3>Set: {currentSet}/{workouts[currentExerciseIndex].sets}</h3>
+                        <h3>{isResting ? 'Rest Time' : 'Set Time'}: {timeLeft} seconds</h3>
                         {exerciseComplete && (
                             <button onClick={handleNextExercise}>Next Exercise</button>
                         )}

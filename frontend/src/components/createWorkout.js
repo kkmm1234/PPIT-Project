@@ -41,6 +41,7 @@ function CreateWorkout() {
             //send a POST request to the server with the data
             const response = await axios.post('/workouts/new/', workout,
                 {
+                    //include the token in the headers
                     headers: {
                         Content_Type: 'application/json',
                         Authorization: `Bearer ${user.token}`

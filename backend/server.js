@@ -60,7 +60,7 @@ app.post('/register', async  (req, res) => {
 })
 
 
-//mdidleware to check token for all routes
+//middleware to check token for all routes
 app.use(authCheck)
 
 //routes
@@ -80,7 +80,10 @@ app.post('/workouts/new', async (req, res) => {
 
 //GET all workouts
 app.get('/workouts', async (req, res) =>{
-    const workout = await Workout.find({}).sort({createdAt: -1})
+
+    const user_id = req.user._id
+
+    const workout = await Workout.find({user_id}).sort({createdAt: -1})
     res.status(200).json(workout)
 })
 

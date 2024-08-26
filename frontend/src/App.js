@@ -18,8 +18,8 @@ function App() {
         <div className="pages">
           <Routes>
             <Route path="/" element={ user? <HomePage /> : <Navigate to = "/login"/>} />
-            <Route path='/update/:id' element={<UpdateWorkout/>}></Route>
-            <Route path='/workoutTimer' element={<WorkoutTimer/>}></Route>
+            <Route path='/update/:id' element={!user ?<UpdateWorkout/> : <Navigate to = "/"/>}></Route>
+            <Route path='/workoutTimer' element={user ?<WorkoutTimer/> : <Navigate to = "/"/>}></Route>
             <Route path='/login' element={!user ?<Login/> : <Navigate to = "/"/>}></Route>
             <Route path='/register' element={ !user ?<Register/> : <Navigate to = "/"/>}></Route>
           </Routes>

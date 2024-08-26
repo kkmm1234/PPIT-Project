@@ -4,6 +4,7 @@ import { useUserContext } from '../context/userContextHook'
 
 
 const NavBar = () => {
+    //basic nave bar with links to home, login, register and start workout
     const {logout} = UserLogout()
 
     const {user} = useUserContext()
@@ -18,7 +19,7 @@ const NavBar = () => {
                 <Link to="/">
                     <h1>Work it Out</h1>
                 </Link>
-                <Link to={'/workoutTimer'}>Start workout</Link>
+                <h3><Link to={'/workoutTimer'}>Start workout</Link></h3>
                 <nav>
                     {/* only if user is logged in show welcome message and logout button */}
                     {user && (
@@ -29,8 +30,8 @@ const NavBar = () => {
                         )}
                     {!user && (
                         <div>
-                            <Link to="/login">Login</Link>
-                            <Link to="/register">Register</Link>
+                            <div><Link to="/login">Login</Link></div>
+                            <div><Link to="/register">Register</Link></div>
                         </div>
                     )}
                 </nav>

@@ -8,7 +8,7 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
     e.preventDefault();
-
+    //using userRegister hook
     await register(user, password);
     
     }

@@ -4,9 +4,9 @@ import axios from "axios";
 import { useUserContext } from "../context/userContextHook";
 
 export default function UpdateWorkout() {
-    let { id } = useParams(); // ID parameter from the URL
+    let { id } = useParams(); //ID parameter from the URL
 
-    // State variables to manage form input values
+    //state variables to manage form input values
     const [title, setTitle] = useState('');
     const [weight, setWeight] = useState('');
     const [reps, setReps] = useState('');
@@ -18,7 +18,7 @@ export default function UpdateWorkout() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Fetch the specific travel item based on the ID
+        //get the workout item based on the ID
         axios.get('/workouts/' + id , {
             headers: {
                 Authorization: `Bearer ${user.token}`
@@ -26,7 +26,7 @@ export default function UpdateWorkout() {
         }
         )
             .then((response) => {
-                //Set state with the retrieved data
+                //set values with data from the server
                 setTitle(response.data.title);
                 setWeight(response.data.weight);
                 setReps(response.data.reps);
@@ -46,7 +46,7 @@ export default function UpdateWorkout() {
             return;
         }
 
-        //create a travel object with updated form input values
+        //create a workout object with updated form input values
         const workout = {
             title: title,
             weight: weight,
